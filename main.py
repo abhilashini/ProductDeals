@@ -1,4 +1,10 @@
-from access_webpage import set_driver, set_pincode, sort_by_discount, quit_driver
+import pprint
+import traceback
+import time
+
+from progress.bar import Bar
+
+from access_webpage import WebsiteSetup
 from send_whatsapp_msg import send_message
 from get_products import get_discounted_products
 
@@ -6,24 +12,19 @@ from get_products import get_discounted_products
 ENDPOINT = "https://www.jiomart.com/c/groceries/2"
 REQUIRED_PINCODE = "560076"
 NOT_REQUIRED_LIST = ["good life", "perfume", "spray", "cologne", "pencil box"]
-MIN_DISCOUNT_PCT = 5
+MIN_DISCOUNT_PCT = 55
 PHONE = "+919035377491"
 
+pp = pprint.PrettyPrinter(indent=4)
+
 try:
-	set_driver()
-	print("Web Driver Ready")
-	set_pincode(REQUIRED_PINCODE)
-	print("Changed to required pincode")
-	# deals_endpoint = goto_deals_page().split("?")[0]
-	# print("Entered deals page")
-	# print(f"deals_endpoint = {deals_endpoint}")
-	sort_by_discount()
-	print("Sorted products by discount percentage")
-	products_on_discount = get_discounted_products(ENDPOINT, MIN_DISCOUNT_PCT)
-	print(products_on_discount)
+	website = WebsiteSetup(REQUIRED_PINCODE)		
+	products_on_discount = get_discounted_products(website.page_content, MIN_DISCOUNT_PCT)
+	pp.pprint(products_on_discount)
 except Exception as e:
-	print(e)
+	pp.pprint(e)
+	pp.pprint(traceback.format_exc())
 	print("ERROR! An Exception Occured")
 	pass
 finally:
-	quit_driver()
+	website.quit_driver()
