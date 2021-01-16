@@ -5,7 +5,7 @@ def get_discounted_products(page_content: str, min_discount_pct: int, not_requir
 	products_on_discount = []
 	soup = BeautifulSoup(''.join(page_content), 'html.parser')
 	all_products = soup.find_all(class_="cat-item")
-	print(len(all_products), "<----- this is how many products I found")
+	# print(len(all_products), "<----- this is how many products I found")
 	for product in all_products:
 		discount_pct = product.select(selector=".dis_section span")[0].text
 		discount_pct = int(discount_pct.split("%")[0])
