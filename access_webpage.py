@@ -5,7 +5,9 @@ from selenium import webdriver
 
 class WebsiteSetup():
 	def __init__(self, pincode, url):
-		self.driver = webdriver.Firefox()
+		firefoxOptions = webdriver.FirefoxOptions()
+		firefoxOptions.set_headless()
+		self.driver = webdriver.Firefox(firefox_options=firefoxOptions)
 		self.driver.get(url)
 		time.sleep(40)
 		print("Fetched URL")

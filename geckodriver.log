@@ -717,3 +717,33 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 1610651420740	Marionette	INFO	Listening on port 39399
 1610651420829	Marionette	WARN	TLS certificate errors will be ignored for this session
 1610651716747	Marionette	INFO	Stopped listening on port 39399
+1610762736771	geckodriver	INFO	Listening on 127.0.0.1:41823
+1610762737703	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-headless" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofileKyfTLv"
+*** You are running in headless mode.
+
+(firefox:14572): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+
+(firefox:14572): GLib-GObject-CRITICAL **: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+
+(/usr/lib/firefox/firefox:14646): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+
+(/usr/lib/firefox/firefox:14646): GLib-GObject-CRITICAL **: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+
+(/usr/lib/firefox/firefox:14726): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+
+(/usr/lib/firefox/firefox:14726): GLib-GObject-CRITICAL **: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+
+(/usr/lib/firefox/firefox:14790): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+
+(/usr/lib/firefox/firefox:14790): GLib-GObject-CRITICAL **: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+
+(/usr/lib/firefox/firefox:14792): GLib-GObject-WARNING **: invalid (NULL) pointer instance
+
+(/usr/lib/firefox/firefox:14792): GLib-GObject-CRITICAL **: g_signal_connect_data: assertion 'G_TYPE_CHECK_INSTANCE (instance)' failed
+1610762742434	Marionette	INFO	Listening on port 42733
+1610762742580	Marionette	WARN	TLS certificate errors will be ignored for this session
+1610763035760	Marionette	INFO	Stopped listening on port 42733
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
