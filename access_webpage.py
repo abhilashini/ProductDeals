@@ -1,30 +1,27 @@
 import time
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class WebsiteSetup():
-	def __init__(self, pincode, url):
+	def __init__(self, url):
 		firefoxOptions = webdriver.FirefoxOptions()
 		firefoxOptions.set_headless()
 		self.driver = webdriver.Firefox(firefox_options=firefoxOptions)
 		self.driver.get(url)
-		time.sleep(40)
-		print("Fetched URL")
-		self.set_pincode(pincode)
-		print("Set pincode")
-		self.page_content = self.goto_deals_page()
 
 	def set_pincode(self, pincode):
-		time.sleep(40)
-		print("Slept for 40 in set_pincode before clicking default pincode span")
-		self.driver.find_element_by_xpath('/html/body/div[1]/div/div/div/ul/li[1]/div[1]/span/span').click()
-		print("Clicked default pincode span")
-		time.sleep(40)
-		# Send required pincode to page
-		self.driver.find_element_by_xpath('//*[@id="rel_pincode"]').send_keys(pincode)
-		# Click on apply button to select required pincode
-		self.driver.find_element_by_xpath('/html/body/div[1]/div/div/div/ul/li[1]/div[3]/div[2]/div[3]/div[2]/form/div[1]/button[2]').click()
+		wait = WebDriverWait(self.driver, 120)
+		pincode_span = wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div/div/div/ul/li[1]/div[1]/span/span')))
+		pincode_span.click()
+		pincode_field = wait.until(EC.presence_of_element_located((By.XPATH, '//*[@id="rel_pincode"]')))
+		pincode_field.send_keys(pincode)
+		self.driver.get_screenshot_as_file("pincode_entered.png")
+		apply_btn = wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/div/ul/li[1]/div[3]/div[2]/div[3]/div[2]/form/div[1]/button[2]')))
+		apply_btn.click()
 
 	def scroll_to_page_end(self):
 		prev_height = self.driver.execute_script("return document.body.scrollHeight")
@@ -37,10 +34,11 @@ class WebsiteSetup():
 			prev_height = curr_height
 
 	def goto_deals_page(self):
-		time.sleep(30)
-		self.driver.find_element_by_xpath('/html/body/div[1]/main/div[2]/div[2]/div[4]/div[1]/div[2]/div/div/button[4]').click()
-		time.sleep(30)
-		self.driver.find_element_by_xpath('/html/body/div[1]/main/div[2]/div[1]/div[2]/div/div/div[2]/div/ul/li/div/div/div/label/input').click()
+		wait = WebDriverWait(self.driver, 60)
+		discount_btn = wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/main/div[2]/div[2]/div[4]/div[1]/div[2]/div/div/button[4]')))
+		discount_btn.click()
+		in_stock_checkbox = wait.until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/main/div[2]/div[1]/div[2]/div/div/div[2]/div/ul/li/div/div/div/label/input')))
+		in_stock_checkbox.click()
 		self.scroll_to_page_end()
 		return self.driver.execute_script("return document.body.innerHTML")
 
