@@ -27,7 +27,7 @@ class WebsiteSetup():
 		prev_height = self.driver.execute_script("return document.body.scrollHeight")
 		while True:
 			self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-			time.sleep(2)
+			time.sleep(1)
 			curr_height = self.driver.execute_script("return document.body.scrollHeight")
 			if curr_height == prev_height:
 				break

@@ -17,15 +17,12 @@ REQUIRED_PINCODE = "560076"
 NOT_REQUIRED_LIST = ["good life", "perfume", "spray", "cologne", "pencil box", "chicken", "fish", "mutton", "agarbatti"]
 MIN_DISCOUNT_PCT = 40
 PHONE = "+919035377491"
-# BOLD_START = "\033[1m"
-# BOLD_END = "\033[0m"
+BOLD_START = "\033[1m"
+BOLD_END = "\033[0m"
 BOLD_START = BOLD_END = "*"
 ITALIC_START = "\x1B[3m"
 ITALIC_END = "\x1B[23m"
 
-pp = pprint.PrettyPrinter(indent=4)
-
-# send_message(PHONE, f"{BOLD_START}BOLD+TEST{BOLD_END}\nTab+Test")
 
 def prettify(products, BOLD_START="\033[1m", BOLD_END="\033[0m"):
 	for product in products:
@@ -77,27 +74,30 @@ if "%" in args.percent:
 else:
 	discount_pct = int(args.percent)
 
+pp = pprint.PrettyPrinter(indent=4)
+
 try:
-	start = time.time()
 	website = WebsiteSetup(ENDPOINT)
+	start = time.time()
 	website.set_pincode(REQUIRED_PINCODE)
+	end = time.time()
+	print(f"Time taken to set pincode = {round((end-start), 2)} seconds\n")
+
+	start = time.time()
 	page_content = website.goto_deals_page()
 	end = time.time()
-	print(f"Time taken to setup website = {round((end-start)/60, 2)} minutes")
-	
+	print(f"Time taken to completely load deals page = {round((end-start), 2)} seconds\n")
+
 	start = time.time()
 	products_on_discount = disounted_products(page_content, discount_pct, NOT_REQUIRED_LIST)
 	end = time.time()
-	print(f"Time taken to write products listing = {round(end-start, 2)} seconds")
+	print(f"Time taken to write products listing = {round(end-start, 2)} seconds\n")
 	
 	print(f"These products aren't included in the listing —")
 	for prd in NOT_REQUIRED_LIST:
 		print(f"\t{prd.title()}")
-	
+
 	fileify(products_on_discount, args.loc)
-	# prettify(products_on_discount)
-	# content = messagify(products_on_discount)
-	# send_message(PHONE, content)
 except Exception as e:
 	print("ERROR! An Exception Occured")
 	pp.pprint(e)
